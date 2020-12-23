@@ -6,7 +6,8 @@ export const videoPlayerInit = () => {
     videoTimePassed = document.querySelector(".video-time__passed"),
     videoProgress = document.querySelector(".video-progress"),
     videoTimeTotal = document.querySelector(".video-time__total"),
-    videoContainer = document.querySelector('.video-container');
+    videoContainer = document.querySelector(".video-container"),
+    videoVolume = document.querySelector(".video-volume");
 
   const toggleIcon = () => {
     if (videoPlayer.paused) {
@@ -46,8 +47,12 @@ export const videoPlayerInit = () => {
       minuteTotal = Math.floor(duration / 60),
       secondsTotal = Math.floor(duration % 60);
 
-    videoTimePassed.textContent = `${addZero(minutePassed)}:${addZero(secondsPassed)}`;
-    videoTimeTotal.textContent = `${addZero(minuteTotal)}:${addZero(secondsTotal)}`;
+    videoTimePassed.textContent = `${addZero(minutePassed)}:${addZero(
+      secondsPassed
+    )}`;
+    videoTimeTotal.textContent = `${addZero(minuteTotal)}:${addZero(
+      secondsTotal
+    )}`;
   };
 
   const progressChange = () => {
@@ -59,15 +64,21 @@ export const videoPlayerInit = () => {
 
   const turnOnPlayer = (event) => {
     const target = event.target;
-    if(target.matches(".video-player")|| target.matches('.video-button__play')){
+    if (
+      target.matches(".video-player") ||
+      target.matches(".video-button__play")
+    ) {
       togglePlay();
-    }else if(target.matches(".video-button__stop")){
+    } else if (target.matches(".video-button__stop")) {
       stopPlay();
     }
   };
 
-
-  videoContainer.addEventListener('click', turnOnPlayer);
+  videoContainer.addEventListener("click", turnOnPlayer);
   videoPlayer.addEventListener("timeupdate", timeUpdate);
-  videoProgress.addEventListener("change", progressChange);
+  videoProgress.addEventListener("input", progressChange);
+  videoVolume.addEventListener("input", () => {
+    videoPlayer.volume = videoVolume.value / 100;
+  });
+  videoVolume.value = videoPlayer.volume * 100;
 };
