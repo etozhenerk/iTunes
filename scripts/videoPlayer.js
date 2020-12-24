@@ -81,4 +81,9 @@ export const videoPlayerInit = () => {
     videoPlayer.volume = videoVolume.value / 100;
   });
   videoVolume.value = videoPlayer.volume * 100;
+
+  videoPlayerInit.stop = () => {
+    videoPlayer.pause();
+    toggleIcon();
+  };
 };

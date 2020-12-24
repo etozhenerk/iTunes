@@ -9,25 +9,25 @@ const playerBtn = document.querySelectorAll(".player-btn"),
   temp = document.querySelector(".temp"),
   btnSection = document.querySelector(".player");
 
-const toggleTabContent = (index) => {
+const deactivationPlayer = () => {
   temp.style.display = "none";
-  for (let i = 0; i < playerBlock.length; i++) {
-    if (index === i) {
-      playerBtn[i].classList.add("active");
-      playerBlock[i].classList.add("active");
-    } else {
-      playerBtn[i].classList.remove("active");
-      playerBlock[i].classList.remove("active");
-    }
-  }
+  playerBtn.forEach(item => item.classList.remove('active'));
+  playerBlock.forEach(item => item.classList.remove('active'));
+
+  radioPlayerInit.stop();
+  videoPlayerInit.stop();
+  musicPlayerInit.stop();
 };
+
 btnSection.addEventListener("click", (event) => {
   let target = event.target;
   target = target.closest(".player-btn");
   if (target) {
     playerBtn.forEach((item, i) => {
       if (item === target) {
-        toggleTabContent(i);
+        deactivationPlayer();
+        item.classList.add('active');
+        playerBlock[i].classList.add('active');
       }
     });
   }
